@@ -8,7 +8,7 @@ import { useCallback } from "react";
 import { Input } from "antd";
 import { useParams, useSearchParams } from "react-router";
 
-const fetchQuotes = async (author) => {
+export const fetchQuotes = async (author) => {
   const resp = await axios.get(
     `https://app-quotes-nest-2025.onrender.com/quote?page=1&author_name=${
       author || ""
