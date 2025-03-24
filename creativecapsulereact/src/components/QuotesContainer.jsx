@@ -1,11 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, List, message, Tag, Typography } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import ConfirmDelete from "./ConfirmDelete";
 import CreateEditQuote from "./CreateQuote";
+import { useCallback } from "react";
+import { Input } from "antd";
 
 const fetchQuotes = async (author) => {
+  console.log("author", author);
+
   const resp = await axios.get(
     `https://app-quotes-nest-2025.onrender.com/quote?page=1&author_name=${
       author || ""
@@ -16,9 +20,13 @@ const fetchQuotes = async (author) => {
 };
 
 const QuotesContainer = () => {
-  const quotes = useQuery({ queryKey: ["quotes"], queryFn: fetchQuotes });
-
+  const [author, setAuthor] = useState("");
   const [isShowAddOpen, setIsShowAddOpen] = useState(false);
+
+  const quotes = useQuery({
+    queryKey: ["quotes", author],
+    queryFn: () => fetchQuotes(author),
+  });
 
   const [isShowDeleteOpen, setIsShowDeleteOpen] = useState({
     open: false,
@@ -32,7 +40,6 @@ const QuotesContainer = () => {
 
   const handleDeleteCancel = () => {
     setIsShowDeleteOpen(false);
- 
   };
   const handleEdit = (item) => {
     setIsShowEditOpen({
@@ -41,13 +48,13 @@ const QuotesContainer = () => {
     });
   };
 
-  const handleOnCancelAddEdit=()=>{
+  const handleOnCancelAddEdit = () => {
     setIsShowEditOpen({
-        open:false,
-        item:null
-    })
-    setIsShowAddOpen(false)
-  }
+      open: false,
+      item: null,
+    });
+    setIsShowAddOpen(false);
+  };
 
   const handleDeleteItem = (item) => {
     setIsShowDeleteOpen({
@@ -70,6 +77,11 @@ const QuotesContainer = () => {
         quotes.refetch();
       });
   };
+
+  const handleSearch = useCallback(async (query) => {
+    setAuthor(query);
+  }, []);
+
   return (
     <>
       <div
@@ -77,8 +89,14 @@ const QuotesContainer = () => {
           display: "flex",
           justifyContent: "flex-end",
           marginBottom: "1rem",
+          gap: "1rem",
         }}
       >
+        <Input.Search
+          placeholder="Search by author"
+          allowClear
+          onSearch={(query) => handleSearch(query)}
+        />
         <Button onClick={() => setIsShowAddOpen(true)}>Add</Button>
       </div>
       <ConfirmDelete
