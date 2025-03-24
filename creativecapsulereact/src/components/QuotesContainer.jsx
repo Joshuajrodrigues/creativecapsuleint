@@ -6,10 +6,9 @@ import ConfirmDelete from "./ConfirmDelete";
 import CreateEditQuote from "./CreateQuote";
 import { useCallback } from "react";
 import { Input } from "antd";
+import { useParams, useSearchParams } from "react-router";
 
 const fetchQuotes = async (author) => {
-  console.log("author", author);
-
   const resp = await axios.get(
     `https://app-quotes-nest-2025.onrender.com/quote?page=1&author_name=${
       author || ""
@@ -22,6 +21,16 @@ const fetchQuotes = async (author) => {
 const QuotesContainer = () => {
   const [author, setAuthor] = useState("");
   const [isShowAddOpen, setIsShowAddOpen] = useState(false);
+  let [searchParams] = useSearchParams();
+
+  const [searchValue, setSearchValue] = useState("");
+
+  useState(() => {
+    if (searchParams.get("author")) {
+      setAuthor(searchParams.get("author"));
+      setSearchValue(searchParams.get("author"));
+    }
+  }, [searchParams.get("author")]);
 
   const quotes = useQuery({
     queryKey: ["quotes", author],
@@ -95,7 +104,11 @@ const QuotesContainer = () => {
         <Input.Search
           placeholder="Search by author"
           allowClear
-          onSearch={(query) => handleSearch(query)}
+          defaultValue={searchValue}
+          onSearch={(query) => {
+            setSearchValue(query);
+            handleSearch(query);
+          }}
         />
         <Button onClick={() => setIsShowAddOpen(true)}>Add</Button>
       </div>

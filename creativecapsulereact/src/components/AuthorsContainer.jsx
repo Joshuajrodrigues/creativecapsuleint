@@ -3,6 +3,7 @@ import { Typography } from "antd";
 import { List } from "antd";
 import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router";
 
 const fetchAuthors = async () => {
   const resp = await axios.get(
@@ -14,15 +15,28 @@ const fetchAuthors = async () => {
 
 const AuthorsContainer = () => {
   const authors = useQuery({ queryKey: ["authors"], queryFn: fetchAuthors });
-
+  let navigate = useNavigate();
+  const handleNavigfationToAuthorQuotes = (item) => {
+    navigate(`/quotes/?author=${item.author_name}`);
+  };
   return (
     <>
       <List
         size="large"
-        header={<Typography.Title style={{textAlign:"left"}} level={3}>Authors</Typography.Title>}
+        header={
+          <Typography.Title style={{ textAlign: "left" }} level={3}>
+            Authors
+          </Typography.Title>
+        }
         bordered
         dataSource={authors.data}
-        renderItem={(item) => <List.Item>{item.author_name}</List.Item>}
+        renderItem={(item) => (
+          <List.Item style={{
+            cursor:"pointer"
+          }} onClick={() => handleNavigfationToAuthorQuotes(item)}>
+            {item.author_name}
+          </List.Item>
+        )}
       />
     </>
   );

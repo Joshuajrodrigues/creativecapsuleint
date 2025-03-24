@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="authors" index element={<AuthorsContainer />} />
-            <Route path="quotes" element={<QuotesContainer />} />
+            <Route path="quotes/:author?" element={<QuotesContainer />} />
           </Route>
         </Routes>
       </BrowserRouter>
