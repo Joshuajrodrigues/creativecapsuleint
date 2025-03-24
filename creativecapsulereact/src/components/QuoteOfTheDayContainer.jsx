@@ -19,10 +19,24 @@ const QuoteOfTheDayContainer = () => {
   // on reload check if session ? check if it has been 24 hrs since session
 
   // if yes set new random else use old
+
+  const checkLastTenQuotes = () => {
+    const randomQuote = quotes.data?.data[Math.floor(Math.random() * 10)];
+    const lasttenQuotes = sessionStorage.getItem("lastTenQuotes");
+    let parasedQuotes = JSON.parse(lasttenQuotes) ||[];
+    if (parasedQuotes && parasedQuotes.includes(randomQuote)) {
+      checkLastTenQuotes();
+    } else {
+      let arrayOfQuotes = [...parasedQuotes, randomQuote];
+      sessionStorage.setItem("lastTenQuotes", JSON.stringify(arrayOfQuotes));
+      return randomQuote;
+    }
+  };
+
   useEffect(() => {
     const oneDay = new Date().getTime() + 1 * 24 * 60 * 60 * 1000;
     const currentDay = new Date().getTime();
-    const randomQuote = quotes.data?.data[Math.floor(Math.random() * 10)];
+    const randomQuote = checkLastTenQuotes();
     const randomQuoteCache = sessionStorage.getItem("randomQuote");
     const randomQuoteTime = sessionStorage.getItem("randomQuoteTime");
     if (randomQuoteTime && randomQuoteCache) {
