@@ -11,7 +11,13 @@ function App() {
         <Typography.Title>Software Quotes</Typography.Title>
       </header>
       <Navbar />
-      <Outlet />
+      <div
+        style={{
+          marginTop: "24px",
+        }}
+      >
+        <Outlet />
+      </div>
     </>
   );
 }

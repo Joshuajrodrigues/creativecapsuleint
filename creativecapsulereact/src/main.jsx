@@ -1,3 +1,4 @@
+import '@ant-design/v5-patch-for-react-19';
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
@@ -6,7 +7,6 @@ import AuthorsContainer from "./components/AuthorsContainer.jsx";
 import QuotesContainer from "./components/QuotesContainer.jsx";
 import "./index.css";
 import ReactQueryProvider from "./components/ReactQueryProvider.jsx";
-
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ReactQueryProvider>

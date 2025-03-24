@@ -16,9 +16,7 @@ const AuthorsContainer = () => {
   const authors = useQuery({ queryKey: ["authors"], queryFn: fetchAuthors });
 
   return (
-    <div style={{
-        marginTop:"24px"
-    }}>
+    <>
       <List
         size="large"
         header={<Typography.Title style={{textAlign:"left"}} level={3}>Authors</Typography.Title>}
@@ -26,7 +24,7 @@ const AuthorsContainer = () => {
         dataSource={authors.data}
         renderItem={(item) => <List.Item>{item.author_name}</List.Item>}
       />
-    </div>
+    </>
   );
 };
 

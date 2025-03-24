@@ -17,3 +17,22 @@
 .tab-links :hover{
   text-decoration: underline;
 }
+
+.quote-container--card{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.quote-container--author{
+  margin-left: auto;
+}
+.quote-container--quote{
+  display: flex;
+  justify-content: space-between;
+}
+.quote-container--likes{
+
+  text-align: center;
+  height: fit-content;
+
+}
