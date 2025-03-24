@@ -1,12 +1,24 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
+import { BrowserRouter, Route, Routes } from "react-router";
 import App from "./App.jsx";
-import { BrowserRouter } from "react-router";
+import AuthorsContainer from "./components/AuthorsContainer.jsx";
+import QuotesContainer from "./components/QuotesContainer.jsx";
+import "./index.css";
+import ReactQueryProvider from "./components/ReactQueryProvider.jsx";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ReactQueryProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="authors" index element={<AuthorsContainer />} />
+            <Route path="quotes" element={<QuotesContainer />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ReactQueryProvider>
+ 
   </StrictMode>
 );
