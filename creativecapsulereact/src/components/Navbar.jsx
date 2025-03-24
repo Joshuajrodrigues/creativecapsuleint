@@ -12,7 +12,7 @@ const items = [
     label: "Quotes",
   },
   {
-    key: "home",
+    key: "quote-of-the-day",
     label: "Home",
   },
 ];

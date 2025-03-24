@@ -7,6 +7,7 @@ import AuthorsContainer from "./components/AuthorsContainer.jsx";
 import QuotesContainer from "./components/QuotesContainer.jsx";
 import "./index.css";
 import ReactQueryProvider from "./components/ReactQueryProvider.jsx";
+import QuoteOfTheDayContainer from './components/QuoteOfTheDayContainer.jsx';
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ReactQueryProvider>
@@ -15,6 +16,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/" element={<App />}>
             <Route path="authors" index element={<AuthorsContainer />} />
             <Route path="quotes/:author?" element={<QuotesContainer />} />
+            <Route path="quote-of-the-day" element={<QuoteOfTheDayContainer />} />
           </Route>
         </Routes>
       </BrowserRouter>
